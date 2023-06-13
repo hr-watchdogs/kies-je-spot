@@ -31,22 +31,31 @@ export default function OverviewPage() {
         attributionControl: true,
         trackResize: true
     }
-
+    
     return (
         <div className=" bg-blue-500 bottom-0 h-[65vh] w-full rounded-t-[5vh] px-6 flex items-center justify-center">
             <div className="flex items-center flex-col justify-between w-full h-full space-y-2">
-                <div className="flex flex-col items-center w-full space-y-8 ">
-                    <div className="flex w-full flex-row justify-between items-center">
-                        <div className="flex space-x-2">
-                            {names.map((name, index) => {
-                                return <Image key={index} alt={"User icon"} src={"/onboarding/user.png"} width={35}
-                                              height={10}/>
-                            })}
+                <div className="flex flex-col items-start w-full space-y-8">
+
+                    <Heading type={"h2"}>Eenheid overzicht</Heading>
+                    <div className="flex flex-col items-start space-y-4">
+
+                        <div className="flex flex-col items-start space-y-2">
+                            <Paragraph fontWeight="semiBold">Eenheidsnummer</Paragraph>
+                            <span className="bg-white rounded-lg flex items-center justify-center  h-8 px-4">
+                                <Paragraph className="text-blue-500" fontWeight="semibold">41:01</Paragraph>
+                            </span>
                         </div>
-                        <Heading type={"h3"}>Eenheid overzicht</Heading>
-                        <span className="bg-white rounded-lg flex items-center justify-center  h-8 px-4">
-                            <Paragraph className="text-blue-500" fontWeight="semibold">41:01</Paragraph>
-                        </span>
+
+                        <div className="flex flex-col items-start space-y-2">
+                            <Paragraph fontWeight="semiBold">Agenten</Paragraph>
+                                <div className="flex space-x-2">
+                                    {names.map((name, index) => {
+                                        return <Image key={index} alt={"User icon"} src={"/onboarding/user.png"} width={35}
+                                                    height={10}/>
+                                    })}
+                                </div>
+                        </div>
                     </div>
                 </div>
                 <div className="w-full h-full flex flex-col">
