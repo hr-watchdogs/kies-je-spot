@@ -1,5 +1,5 @@
 import * as React from "react";
-import mapboxgl, {Marker} from "mapbox-gl";
+import mapboxgl, {MapMouseEvent, Marker} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 interface MapboxMapProps {
@@ -8,9 +8,11 @@ interface MapboxMapProps {
     onMapLoaded?(map: mapboxgl.Map): void;
 
     onMapRemoved?(): void;
+
+    onClick?(event: MapMouseEvent): void;
 }
 
-function MapboxMap({initialOptions = {}, onMapLoaded, onMapRemoved}: MapboxMapProps) {
+function MapboxMap({initialOptions = {}, onMapLoaded, onMapRemoved, onClick}: MapboxMapProps) {
     const [map, setMap] = React.useState<mapboxgl.Map>();
 
     const mapNode = React.useRef(null);
@@ -80,6 +82,10 @@ function MapboxMap({initialOptions = {}, onMapLoaded, onMapRemoved}: MapboxMapPr
                     labelLayerId
                 );
             });
+            if (onClick){
+                map.on('click', (e)=> onClick(e));
+            }
+
         }
 
         return () => {
@@ -106,7 +112,7 @@ function MapboxMap({initialOptions = {}, onMapLoaded, onMapRemoved}: MapboxMapPr
     }, [map]);
 
 
-    return <div ref={mapNode} className="w-full h-64 rounded-xl"/>;
+    return <div ref={mapNode} className="w-full h-full rounded-xl"/>;
 }
 
 export default MapboxMap;

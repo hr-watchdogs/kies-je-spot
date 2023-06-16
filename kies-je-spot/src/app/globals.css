@@ -25,3 +25,21 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.agent-marker {
+  background-image: url('/markers/agent.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.unit-marker {
+  background-image: url('/markers/police-car.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
