@@ -10,11 +10,10 @@ interface OTPFormProps extends HTMLFormElement {
     value: string
     setValue: Dispatch<string>
     setInvalid: Dispatch<boolean>
-    ref: MutableRefObject<AuthCodeRef | undefined>
     invalid: boolean
 }
 
-export const OTPForm: FC<Partial<OTPFormProps>> = ({setInvalid, setValue, value, ref, invalid}) => {
+export const OTPForm: FC<Partial<OTPFormProps>> = ({setInvalid, setValue, invalid}) => {
 
     const handleOnChange = (res: string) => {
         if (setInvalid) {
@@ -25,6 +24,7 @@ export const OTPForm: FC<Partial<OTPFormProps>> = ({setInvalid, setValue, value,
     return (
         <div className={"flex flex-col justify-center items-center"}>
             <AuthCode
+                allowedCharacters={"numeric"}
                 containerClassName={"w-full flex flex-row items-between"}
                 inputClassName={classNames("w-10 h-10 sm:max-xl:h-16 sm:max-xl:w-16 xl:w-20 xl:h-20 max-w-16 transition-color ease-out duration-[900ms] m-2 sm:max-xl:m-4 rounded-lg text-black text-center font-semibold grow text-xl group group-invalid", invalid ? "border-[#FF0000] bg-[#FFD3D3] border-2" : "")}
                 length={5}

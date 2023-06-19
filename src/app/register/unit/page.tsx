@@ -2,7 +2,7 @@
 import {Heading} from "@/components/ui/Typography/Heading";
 import {Button, ButtonType} from "@/components/ui/Button";
 import {RegisterUnitNames} from "@/components/ui/Form/RegisterUnitNames";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Paragraph} from "@/components/ui/Typography/Paragraph";
 import Link from "next/link";
 import {useRouter} from "next/navigation";

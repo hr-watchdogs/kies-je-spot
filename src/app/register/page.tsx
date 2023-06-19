@@ -2,13 +2,14 @@
 import {Heading} from "@/components/ui/Typography/Heading";
 import {Button, ButtonType} from "@/components/ui/Button";
 import {OTPForm} from "@/components/ui/Form/OTP";
-import {EventHandler, MouseEvent, useEffect, useRef, useState} from "react";
+import {MouseEvent, useEffect, useRef, useState} from "react";
 import {AuthCodeRef} from "react-auth-code-input";
 import {useRouter} from "next/navigation";
 import {Paragraph} from "@/components/ui/Typography/Paragraph";
+import {useSocket} from "@/context/socket";
 
 export default function Index() {
-
+    const socket = useSocket()
     const [otp, setOtp] = useState<string>("")
     const [invalid, setInvalid] = useState<boolean>(false)
     const AuthInputRef = useRef<AuthCodeRef>();
@@ -17,18 +18,36 @@ export default function Index() {
 
     const signIn = async (e:MouseEvent)=> {
         e.preventDefault()
-        console.log(otp)
         if (otp.length < MAX_OTP_LENGTH) {
             setInvalid(true)
             return
         }
-        // todo: remove in production
-        console.log(`Code: ${otp}`)
-        await router.push('/register/unit')
+        const payload = {room: parseInt(otp)}
+        if (socket) {
+            socket.emit("join", payload)
+        }
+
     }
+
     useEffect(() => {
+
+        socket?.on("join:response", async (response)=> {
+            const res = JSON.parse(response)
+            switch (res.code) {
+                case "JOINED_ROOM":
+                    await router.push('/register/unit')
+                    socket?.removeListener("join:response")
+                    break
+                case "INVALID_ROOM":
+                    setInvalid(true)
+                    break
+                default:
+                    break
+
+            }
+        })
         router.prefetch('/register/unit')
-    }, [otp])
+    }, [otp, socket])
 
     return (
         <section className=" bottom-0 h-full w-full p-6 landscape:p-0 flex items-center justify-center">
