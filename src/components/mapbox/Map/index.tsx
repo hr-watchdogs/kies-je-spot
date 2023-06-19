@@ -5,7 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 interface MapboxMapProps {
     initialOptions?: Omit<mapboxgl.MapboxOptions, "container">;
 
-    onMapLoaded?(map: mapboxgl.Map): void;
+    onMapLoaded?(map: mapboxgl.EventData): void;
 
     onMapRemoved?(): void;
 
@@ -35,9 +35,12 @@ function MapboxMap({initialOptions = {}, onMapLoaded, onMapRemoved, onClick}: Ma
         setMap(mapboxMap);
 
         if (initialOptions?.center) {
-            const {lat, lng} = initialOptions.center
-            const marker = new Marker()
-                .setLngLat([lng, lat])
+            const el = document.createElement('div');
+            el.className = 'marker hotzone-marker';
+            const marker = new Marker({
+                element: el
+            })
+                .setLngLat(initialOptions.center)
                 .addTo(mapboxMap);
         }
 

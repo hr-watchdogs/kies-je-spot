@@ -9,7 +9,7 @@ export const metadata = {
     description: 'Watchdogs prototype',
     robots: "no-follow",
     openGraph: {
-        image: "/next.svg"
+        image: "/onboarding/police-car.png"
     }
 }
 

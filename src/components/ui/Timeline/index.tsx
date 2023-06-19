@@ -1,6 +1,5 @@
 import {BackwardIcon, ForwardIcon, PauseIcon, PlayIcon} from "@heroicons/react/20/solid";
 import {FC, HTMLAttributes, PropsWithChildren, useEffect, useState} from "react";
-import {ButtonType} from "@/components/ui/Button";
 import {classNames} from "@/utils/classNames";
 
 enum ButtonType {
@@ -10,7 +9,7 @@ enum ButtonType {
     REWIND
 }
 
-interface TimelineButtonProps {
+interface TimelineButtonProps extends HTMLAttributes<HTMLDivElement>{
     icon: ButtonType.PLAY | ButtonType.PAUSE | ButtonType.FORWARD | ButtonType.REWIND
 }
 
@@ -24,22 +23,22 @@ const TimelineButton: FC<TimelineButtonProps> = ({icon = ButtonType.PLAY, ...pro
         [ButtonType.REWIND, BackwardIcon],
     ]);
 
-    const Icon = iconMap.get(icon) as FC
+    const Icon = iconMap.get(icon) as FC<HTMLAttributes<HTMLSpanElement>>
 
-    return <button {...props}
-                   className={classNames("w-16 h-16 flex items-center justify-center transition-colors duration-500 p-2 rounded-full", icon === ButtonType.PLAY ?
-                       "bg-blue-300 hover:bg-gray-500" :
-                       ""
+    return <div {...props}
+                   className={classNames("w-16 h-16 flex items-center cursor-pointer shadow-xl shadow-[#1c1c1c]/50 justify-center transition-colors duration-500 p-2 rounded-full", icon === ButtonType.PLAY ?
+                       "bg-blue-300 hover:bg-blue-400 " :
+                       "bg-blue-400"
                    )}>
         <Icon className="w-16 h-16"/>
-    </button>
+    </div>
 }
 
-interface TimelineProps extends HTMLAttributes<HTMLButtonElement> {
-
+interface TimelineProps extends HTMLAttributes<HTMLDivElement> {
+    start: ()=>void
 }
 
-export const Timeline: FC<TimelineProps> = ({...props}) => {
+export const Timeline: FC<TimelineProps> = ({start,...props}) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [percentage, setPercentage] = useState(1)
     const [steps, setSteps] = useState([{}, {}, {}])
@@ -50,17 +49,17 @@ export const Timeline: FC<TimelineProps> = ({...props}) => {
         )
     }, [])
 
-    return <div className="rounded-xl bg-white/80 p-1  h-fit w-1/2" {...props}>
+    return <div className="rounded-xl  p-1  h-fit w-1/2" {...props}>
         <div className="flex flex-col space-y-6 w-full justify-center items-center">
-            <div className="w-full border-2 border-gray-300 rounded-full">
-                <div className={classNames("bg-gray-500  h-8  rounded-full", `w-[${percentage}%]`)}></div>
-            </div>
 
             <div className="flex flex-row space-x-6">
                 {
                     !isPlaying ? <TimelineButton
                         icon={ButtonType.PLAY}
-                        onClick={(e) => setIsPlaying(true)}
+                        onClick={(e) => {
+                            setIsPlaying(true)
+                            start()
+                        }}
                     /> : <TimelineButton
                         icon={ButtonType.PAUSE}
                         onClick={(e) => setIsPlaying(false)}

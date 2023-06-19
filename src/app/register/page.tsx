@@ -2,14 +2,14 @@
 import {Heading} from "@/components/ui/Typography/Heading";
 import {Button, ButtonType} from "@/components/ui/Button";
 import {OTPForm} from "@/components/ui/Form/OTP";
-import {MouseEvent, useContext, useEffect, useRef, useState} from "react";
+import {MouseEvent, useEffect, useRef, useState} from "react";
 import {AuthCodeRef} from "react-auth-code-input";
 import {useRouter} from "next/navigation";
 import {Paragraph} from "@/components/ui/Typography/Paragraph";
-import {SocketContext, useSocket} from "@/context/socket";
+import {useSocket} from "@/context/socket";
 
 export default function Index() {
-    const {socket} = useContext(SocketContext)
+    const socket = useSocket()
     const [otp, setOtp] = useState<string>("")
     const [invalid, setInvalid] = useState<boolean>(false)
     const AuthInputRef = useRef<AuthCodeRef>();
@@ -18,24 +18,35 @@ export default function Index() {
 
     const signIn = async (e:MouseEvent)=> {
         e.preventDefault()
-        console.log(otp)
         if (otp.length < MAX_OTP_LENGTH) {
             setInvalid(true)
             return
         }
         const payload = {room: parseInt(otp)}
-        console.log("payload ",payload)
-        console.log(socket)
-        socket.emit("join", payload)
+        if (socket) {
+            socket.emit("join", payload)
+        }
 
-        // todo: remove in production
-        console.log(`Code: ${otp}`)
-        await router.push('/register/unit')
     }
+
     useEffect(() => {
+
+        socket?.on("join:response", async (response)=> {
+            const res = JSON.parse(response)
+            switch (res.code) {
+                case "JOINED_ROOM":
+                    await router.push('/register/unit')
+                    socket?.removeListener("join:response")
+                    break
+                case "INVALID_ROOM":
+                    setInvalid(true)
+                    break
+                default:
+                    break
+
+            }
+        })
         router.prefetch('/register/unit')
-        console.log("register")
-        console.log(socket)
     }, [otp, socket])
 
     return (

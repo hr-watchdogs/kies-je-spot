@@ -1,10 +1,11 @@
-import {ReactNode} from "react";
+import {ReactNode, useEffect} from "react";
 
 export default function RootLayout(props: {
     children: ReactNode;
     banner: ReactNode;
     start: ReactNode;
 }) {
+
     return (
         <main
             className="flex min-h-screen flex-col items-center h-screen w-screen bg-white flex flex-col justify-end items-end">
