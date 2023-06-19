@@ -2,13 +2,14 @@
 import {Heading} from "@/components/ui/Typography/Heading";
 import {Button, ButtonType} from "@/components/ui/Button";
 import {OTPForm} from "@/components/ui/Form/OTP";
-import {EventHandler, MouseEvent, useEffect, useRef, useState} from "react";
+import {MouseEvent, useContext, useEffect, useRef, useState} from "react";
 import {AuthCodeRef} from "react-auth-code-input";
 import {useRouter} from "next/navigation";
 import {Paragraph} from "@/components/ui/Typography/Paragraph";
+import {SocketContext, useSocket} from "@/context/socket";
 
 export default function Index() {
-
+    const {socket} = useContext(SocketContext)
     const [otp, setOtp] = useState<string>("")
     const [invalid, setInvalid] = useState<boolean>(false)
     const AuthInputRef = useRef<AuthCodeRef>();
@@ -22,13 +23,20 @@ export default function Index() {
             setInvalid(true)
             return
         }
+        const payload = {room: parseInt(otp)}
+        console.log("payload ",payload)
+        console.log(socket)
+        socket.emit("join", payload)
+
         // todo: remove in production
         console.log(`Code: ${otp}`)
         await router.push('/register/unit')
     }
     useEffect(() => {
         router.prefetch('/register/unit')
-    }, [otp])
+        console.log("register")
+        console.log(socket)
+    }, [otp, socket])
 
     return (
         <section className=" bottom-0 h-full w-full p-6 landscape:p-0 flex items-center justify-center">
