@@ -30,26 +30,31 @@ export default function Page() {
 
                 <div className="flex flex-col space-y-2 w-full">
                     <Link href="/register/overview" prefetch={true}>
-                        <Button
-                            className="w-full"
-                            buttonType={ButtonType.PRIMARY}
-                            onClick={async (event) => {
-                                event.preventDefault()
-                                await router.prefetch("/register/overview")
-                                const invalidFields:(number | undefined)[] = names.map((name, position) => {
-                                    if (name.length === 0) {
-                                        console.log("name:", name)
-                                        return position
-                                    }
-                                }).filter((field)=> (typeof field != "undefined" ))
-                                setEmptyFields(invalidFields)
-                                console.log(invalidFields)
-                                console.log("index", emptyFields)
-                                if (invalidFields.length === 0) await router.push("/register/overview")
-                            }}
-                        >
-                            Volgende
-                        </Button>
+                    <Button
+    className="w-full"
+    buttonType={ButtonType.PRIMARY}
+    onClick={async (event) => {
+        event.preventDefault()
+        await router.prefetch("/register/overview")
+        const invalidFields:(number | undefined)[] = names.map((name, position) => {
+            if (name.length === 0) {
+                console.log("name:", name)
+                return position
+            }
+        }).filter((field)=> (typeof field != "undefined" ))
+        setEmptyFields(invalidFields)
+        console.log(invalidFields)
+        console.log("index", emptyFields)
+        if (invalidFields.length === 0) {
+            // Add the names to the URL as a query parameter
+            const url = new URL('/register/overview', window.location.href);
+            url.searchParams.set('names', names.join(','));
+            await router.push(url.toString());
+        }
+    }}
+>
+    Volgende
+</Button>
                     </Link>
                 </div>
             </div>

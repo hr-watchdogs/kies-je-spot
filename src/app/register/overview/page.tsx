@@ -6,10 +6,11 @@ import Image from "next/image";
 import MapboxMap from "@/components/mapbox/Map";
 import mapboxgl, {MapboxOptions, Marker} from "mapbox-gl";
 import {Transition} from "@headlessui/react";
-
+import { useSearchParams } from 'next/navigation'
 
 export default function OverviewPage() {
-    const [names, setNames] = useState(["Nigel", "Timon"])
+    const searchParams = useSearchParams()
+    const names = searchParams.get('names')?.split(',') || []
     const [mapIsLoaded, setMapIsLoaded] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
     const startPoint = new mapboxgl.LngLat(4.4831341686501816, 51.88601519268426);
