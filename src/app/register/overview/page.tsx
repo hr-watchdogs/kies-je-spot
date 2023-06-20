@@ -3,12 +3,10 @@ import {Heading} from "@/components/ui/Typography/Heading";
 import {useEffect, useState} from "react";
 import {Paragraph} from "@/components/ui/Typography/Paragraph";
 import Image from "next/image";
-import MapboxMap from "@/components/mapbox/Map";
-import mapboxgl, {MapboxOptions, Marker} from "mapbox-gl";
-import {Transition} from "@headlessui/react";
+import mapboxgl, {MapboxOptions} from "mapbox-gl";
 import {useRouter, useSearchParams} from 'next/navigation'
 import {useSocket} from "@/context/socket";
-import {Modal} from "@/components/ui/Modal";
+import {Button, ButtonType} from "@/components/ui/Button";
 
 export default function OverviewPage() {
     const socket = useSocket()
@@ -82,11 +80,11 @@ export default function OverviewPage() {
                                     })}
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                    <div className="w-full h-full flex flex-col">
-                        <div
-                            className="flex flex-col w-ful h-1/3 justify-start items-start  justify-center items-start">
+                    <div className="w-full h-full flex flex-col space-y-16">
+                        <div className="flex flex-col w-ful h-1/3 justify-start items-start  justify-center items-start space-y-6">
                             <div className="flex flex-col w-2/3">
                                 <Heading type="h3">Werkzaamheden</Heading>
                                 <Paragraph fontWeight="thin" className="text-sm">
@@ -95,6 +93,12 @@ export default function OverviewPage() {
                                     hondengeleider.
                                 </Paragraph>
                             </div>
+
+                            <Button
+                                onClick={()=>router.push("/session/tablet")}
+                                buttonType={ButtonType.PRIMARY}>
+                                Start
+                            </Button>
                         </div>
 
                     </div>
