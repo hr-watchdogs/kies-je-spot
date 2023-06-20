@@ -12,7 +12,7 @@ export default function Index() {
     const socket = useSocket()
     const [otp, setOtp] = useState<string>("")
     const [invalid, setInvalid] = useState<boolean>(false)
-    const AuthInputRef = useRef<AuthCodeRef>();
+    // const AuthInputRef = useRef<AuthCodeRef>();
     const router = useRouter()
     const MAX_OTP_LENGTH = 5;
 
@@ -59,7 +59,7 @@ export default function Index() {
                         aangegeven op het bord.</Paragraph>
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                    <OTPForm ref={AuthInputRef} invalid={invalid} setInvalid={setInvalid} value={otp}
+                    <OTPForm invalid={invalid} setInvalid={setInvalid} value={otp}
                              setValue={setOtp}/>
                 </div>
                 <div className="flex flex-col space-y-6">

@@ -45,16 +45,19 @@ export default function OverviewPage() {
     }
 
     useEffect(() => {
-        socket?.on("unit:start", ()=>startSession)
+        console.log(socket)
+        socket?.on("session:start", () => startSession())
+        socket?.on("unit:start", () => startSession())
     }, [])
 
     return (
-        isStartingSession ? <div className="flex flex-col items-center justify-center space-y-6">
-
-            <Heading type="h1">Loading map..</Heading>
-            <Image alt="loading icon" className="animate-spin " src="/onboarding/loading.png" width={50} height={50}/>
-
-            </div> :
+        isStartingSession ?
+            <div className="flex flex-col items-center justify-center space-y-6">
+                <Heading type="h1">Loading map..</Heading>
+                <Image alt="loading icon" className="animate-spin " src="/onboarding/loading.png" width={50}
+                       height={50}/>
+            </div>
+            :
             <div
                 className=" bg-blue-500 bottom-0 h-[65vh] w-full rounded-t-[5vh] px-6 flex items-center justify-center">
                 <div className="flex items-center flex-col justify-between w-full h-full space-y-2">

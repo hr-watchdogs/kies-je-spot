@@ -26,7 +26,7 @@ export const RegisterUnitNames: FC<RegisterUnitNamesOptions> = ({names, emptyFie
     return (
         names.map((name, index) => {
             let emptyField = emptyFields?.includes(index)
-            return <div className="flex w-full px-12  flex-row justify-center items-center space-x-6 ">
+            return <div key={index} className="flex w-full px-12  flex-row justify-center items-center space-x-6 ">
                 <div className="flex flex-col w-full  justify-center py-2 relative">
                     <Input
                         key={index}

@@ -43,8 +43,6 @@ export default function Page() {
             }
         }).filter((field)=> (typeof field != "undefined" ))
         setEmptyFields(invalidFields)
-        console.log(invalidFields)
-        console.log("index", emptyFields)
         if (invalidFields.length === 0) {
             // Add the names to the URL as a query parameter
             const url = new URL('/register/overview', window.location.href);

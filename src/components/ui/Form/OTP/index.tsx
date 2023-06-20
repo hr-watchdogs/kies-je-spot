@@ -7,7 +7,6 @@ import { Transition } from "@headlessui/react";
 
 
 interface OTPFormProps extends HTMLFormElement {
-    value: string
     setValue: Dispatch<string>
     setInvalid: Dispatch<boolean>
     invalid: boolean
@@ -19,7 +18,9 @@ export const OTPForm: FC<Partial<OTPFormProps>> = ({setInvalid, setValue, invali
         if (setInvalid) {
             setInvalid(false)
         }
-        if (typeof setValue !== 'undefined') setValue(res)
+        if (typeof setValue !== 'undefined') {
+            setValue(res)
+        }
     };
     return (
         <div className={"flex flex-col justify-center items-center"}>
