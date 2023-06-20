@@ -155,7 +155,7 @@ const SessionPage = () => {
                         className={"absolute h-32 items-center my-2 justify-center items-center flex w-full bottom-0 z-10"}>
                         <Timeline start={() => {
                             console.log("starting session for tablets")
-                            socket?.emit("unit:start")}
+                            socket?.emit("session:start")}
                         }/>
                     </div>
 
