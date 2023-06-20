@@ -44,7 +44,7 @@ export default function OverviewPage() {
     }
 
     useEffect(() => {
-        socket?.on("unit:start", ()=>startSession())
+        socket?.on("session:start", ()=>startSession())
     }, [])
 
     return (
