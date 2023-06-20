@@ -39,12 +39,13 @@ export default function OverviewPage() {
     }
 
     const startSession = async () => {
+        console.info("Starting session...")
         setStartingSession(true)
         await router.push("/session/tablet")
     }
 
     useEffect(() => {
-        socket?.on("unit:start", ()=>startSession())
+        socket?.on("unit:start", ()=>startSession)
     }, [])
 
     return (
