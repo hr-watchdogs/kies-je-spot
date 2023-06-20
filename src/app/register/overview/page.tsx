@@ -93,43 +93,7 @@ export default function OverviewPage() {
                                 </Paragraph>
                             </div>
                         </div>
-                        <div className="flex flex-col w-full h-2/3 space-y-2">
-                            <div className="flex flex-col w-full space-y-2 relative">
-                                <Heading type="h3">Startlocatie</Heading>
-                                <div className="flex flex-col w-full space-y-2 relative">
-                                    <Transition
-                                        show={true}
-                                        enter="transition-opacity duration-300"
-                                        enterFrom="opacity-0"
-                                        enterTo="opacity-100"
-                                        leave="transition-opacity duration-300"
-                                        leaveFrom="opacity-100"
-                                        leaveTo="opacity-0"
-                                    >
-                                        <div
-                                            className={`${
-                                                isLoading && mapIsLoaded ? "hidden" : ""
-                                            }`}
-                                        >
-                                            <MapboxMap
-                                                onMapLoaded={onMapLoaded}
-                                                onMapRemoved={onMapRemoved}
-                                                initialOptions={mapSettings}
-                                            />
-                                        </div>
-                                    </Transition>
-                                    {(isLoading) && (
-                                        <div
-                                            className="flex justify-center flex-col bg-gray-300/5 items-center h-64 rounded-xl absolute w-full">
-                                            <Image src="/onboarding/loading.png" width={50} height={50}
-                                                   alt="loading icon"
-                                                   className="animate-spin"/>
-                                            <Paragraph>Kaart aan het laden...</Paragraph>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
